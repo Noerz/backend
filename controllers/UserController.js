@@ -34,4 +34,32 @@ export const RegisterCustomer = async (req, res) => {
 
 };
 
+export const GetCustomer = async(req,res)=>{
+    try {
+        let query = db.collection("users");
+        let response = [];
+  
+        await query.get().then((data) => {
+          let docs = data.docs; // query results
+  
+          docs.map((doc) => {
+            const selectedData = {
+              email: doc.data().email,
+              password: doc.data().password,
+              firstName: doc.data().firstName,
+            };
+  
+            response.push(selectedData);
+            
+          });
+          return response;
+        });
+  
+        return res.status(200).send({ status: "Success", data: response });
+      } catch (error) {
+        console.log(error);
+        res.status(500).send({ status: "Failed", msg: error });
+      }
+};
+
 
