@@ -13,5 +13,11 @@ const Admin = db.define('admin',{
 export default Admin;
 
 (async()=>{
-    await db.sync();
+    await db.sync()
+    .then(() => {
+      console.log('Tabel telah dibuat');
+    })
+    .catch((err) => {
+      console.error('Gagal membuat tabel', err);
+    });
 })();
